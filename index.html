@@ -1,209 +1,343 @@
 <!DOCTYPE html>
-<html class="dark" lang="pt-BR">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inscrição — Atos Itatiaia · Culto na Praia</title>
-  <meta name="description" content="Culto na Praia — Atos Itatiaia Distrital. 20 de junho, 16h, Urca. Todos são bem-vindos." />
-  <meta property="og:title" content="Atos Itatiaia — Culto na Praia" />
-  <meta property="og:description" content="Confirme sua presença no culto jovem na Urca, 20/06 às 16h." />
-  <meta property="og:image" content="assets/logo-culto-praia.jpg" />
+  <meta name="description" content="Garanta sua vaga no Culto na Praia — 20/06, 16h, Urca. Inscrição rápida pelo WhatsApp." />
   <link rel="icon" href="assets/logo-atos.jpg" type="image/jpeg" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            background: "#1b110d",
-            surface: "#241915",
-            "on-surface": "#f3ded7",
-            "on-surface-variant": "#e2bfb0",
-            primary: "#ffb693",
-            "primary-container": "#ff6b00",
-            "on-primary-container": "#572000",
-            secondary: "#74d5e5",
-            "secondary-container": "#359ead",
-            tertiary: "#f9bc48",
-            "tertiary-container": "#c68f1b",
-            outline: "#a98a7d",
-            error: "#ffb4ab",
-          },
-          fontFamily: {
-            display: ["Syne", "sans-serif"],
-            body: ["Outfit", "sans-serif"],
-          },
-          maxWidth: { container: "1280px" },
-        },
-      },
-    };
-  </script>
   <style>
-    .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    :root {
+      --bg: #faf8f5;
+      --card: #ffffff;
+      --ink: #1c1410;
+      --muted: #6b5c52;
+      --accent: #e85d00;
+      --accent-hover: #c44e00;
+      --border: #e8ddd4;
+      --ok: #1a7f4b;
+      --err: #c62828;
+      --radius: 14px;
+      --shadow: 0 8px 30px rgba(28, 20, 16, 0.06);
     }
-    .brush-underline { position: relative; z-index: 1; }
-    .brush-underline::after {
-      content: "";
-      position: absolute;
-      bottom: -6px;
-      left: -8%;
-      width: 116%;
-      height: 10px;
-      background: #ff6b00;
-      z-index: -1;
-      border-radius: 4px;
-      opacity: 0.85;
-      transform: skewX(-6deg);
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    .glow-orange { box-shadow: 0 0 40px rgba(255, 107, 0, 0.45); }
-    .glass-panel {
-      background: rgba(36, 25, 21, 0.65);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+
+    .wrap {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0 1.25rem 6rem;
     }
+
+    /* Header: só logo flutuante */
+    .site-header {
+      padding: 1.75rem 0 0.5rem;
+      text-align: center;
+    }
+
+    .logo-float {
+      width: min(200px, 58vw);
+      height: auto;
+      display: inline-block;
+      filter: drop-shadow(0 10px 24px rgba(232, 93, 0, 0.22));
+      animation: float 5s ease-in-out infinite;
+    }
+
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-14px) rotate(1.5deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
-    .animate-float { animation: float 6s ease-in-out infinite; }
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+
+    /* Bloco de conversão — acima da dobra */
+    .pitch {
+      text-align: center;
+      margin-bottom: 1.25rem;
     }
-    .confetti-piece {
-      position: fixed;
-      top: -10px;
-      z-index: 100;
-      pointer-events: none;
-      animation: confetti 4s linear forwards;
+
+    .pitch h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0 0 0.35rem;
+      letter-spacing: -0.02em;
     }
-    .field-input {
-      background: rgba(40, 29, 25, 0.9);
-      border: none;
-      border-bottom: 3px solid rgba(169, 138, 125, 0.4);
-      border-radius: 0.5rem 0.5rem 0 0;
-      color: #f3ded7;
-      transition: border-color 0.2s, box-shadow 0.2s;
+
+    .pitch .meta {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
     }
-    .field-input:focus {
+
+    .pitch .sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .trust {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .trust span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    /* Formulário */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .card .hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .field { margin-bottom: 0.9rem; }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    label .req { color: var(--accent); }
+
+    input, select, textarea {
+      width: 100%;
+      font: inherit;
+      font-size: 1rem;
+      padding: 0.75rem 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
       outline: none;
-      border-bottom-color: #ff6b00;
-      box-shadow: 0 4px 20px rgba(255, 107, 0, 0.15);
+      border-color: var(--accent);
     }
-    .field-input.invalid { border-bottom-color: #ffb4ab; }
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
-    .custom-scroll::-webkit-scrollbar-track { background: #1b110d; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #f9bc48; border-radius: 10px; }
-    .hidden-view { display: none !important; }
+
+    input.invalid { border-color: var(--err); }
+
+    .err {
+      font-size: 0.75rem;
+      color: var(--err);
+      min-height: 1em;
+      margin-top: 0.2rem;
+    }
+
+    details {
+      margin: 0.5rem 0 0.75rem;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      background: #fffcfa;
+    }
+
+    details summary {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .check {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      margin: 0.75rem 0;
+    }
+
+    .check input { width: 1.1rem; height: 1.1rem; margin-top: 0.15rem; accent-color: var(--accent); flex-shrink: 0; }
+    .check label { font-weight: 400; font-size: 0.8rem; color: var(--muted); margin: 0; }
+
+    .cta {
+      width: 100%;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.95rem 1rem;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .cta:hover { background: var(--accent-hover); }
+    .cta:active { transform: scale(0.98); }
+    .cta:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .cta-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin: 0.6rem 0 0;
+    }
+
+    /* Sticky CTA mobile */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.75rem 1.25rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+      z-index: 20;
+    }
+
+    @media (max-width: 640px) {
+      .sticky-cta.visible { display: block; }
+    }
+
+    /* Sucesso */
+    .success {
+      display: none;
+      text-align: center;
+    }
+
+    .success.on { display: block; }
+
+    .success h2 {
+      font-size: 1.5rem;
+      margin: 0 0 0.5rem;
+      color: var(--ok);
+    }
+
+    .success p {
+      color: var(--muted);
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+    }
+
+    .success .box {
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: #fffcfa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      margin-bottom: 1rem;
+      line-height: 1.55;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    .hidden { display: none !important; }
+
+    footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      padding: 2rem 0 1rem;
+    }
   </style>
 </head>
-<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white custom-scroll overflow-x-hidden min-h-screen flex flex-col">
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <img
+        src="assets/logo-atos-hero.png"
+        alt="Atos Itatiaia"
+        class="logo-float"
+        width="200"
+        height="299"
+        fetchpriority="high"
+      />
+    </header>
 
-  <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-primary-container/10">
-    <nav class="flex justify-between items-center px-4 md:px-16 py-4 max-w-container mx-auto">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden glow-orange">
-          <img alt="" class="w-full h-full object-cover" src="assets/logo-atos.jpg" />
-        </div>
-        <span class="font-display text-lg md:text-xl text-primary uppercase italic tracking-tighter">Atos Itatiaia</span>
+    <section class="pitch" id="pitch">
+      <h1>Culto na Praia — Urca</h1>
+      <p class="meta">20 de junho · 16h · Gratuito</p>
+      <p class="sub">Confirme em menos de 1 minuto. Você finaliza pelo WhatsApp.</p>
+      <div class="trust">
+        <span>Culto jovem</span>
+        <span>Todos bem-vindos</span>
+        <span>Distrital</span>
       </div>
-      <button type="button" id="nav-cta" class="bg-primary-container text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all glow-orange">
-        Quero ir!
-      </button>
-    </nav>
-  </header>
+    </section>
 
-  <main class="relative flex-1 pt-28 pb-20 px-4 min-h-screen">
-    <div class="absolute inset-0 z-0 opacity-25 pointer-events-none">
-      <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary-container rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary-container rounded-full blur-[120px]"></div>
-    </div>
+    <div id="form-block">
+      <div class="card">
+        <h2>Garanta sua vaga</h2>
+        <p class="hint">Só o essencial agora. O restante é opcional.</p>
 
-    <!-- FORM VIEW -->
-    <div id="form-view" class="relative z-10 max-w-2xl mx-auto space-y-8">
-      <div class="text-center space-y-5">
-        <div class="relative inline-block animate-float">
-          <div class="absolute inset-0 bg-primary-container/20 blur-3xl rounded-full scale-150"></div>
-          <img
-            alt="Atos Itatiaia — Culto na Praia"
-            class="relative w-full max-w-[360px] mx-auto drop-shadow-[0_20px_50px_rgba(255,107,0,0.5)] rounded-2xl"
-            src="assets/logo-culto-praia.jpg"
-          />
-        </div>
-        <div class="flex flex-wrap justify-center gap-2">
-          <span class="px-4 py-1 rounded-full bg-primary-container/20 border border-primary-container text-primary text-xs font-bold uppercase tracking-widest">Culto na praia</span>
-          <span class="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-xs font-bold uppercase tracking-widest">Todos são bem-vindos</span>
-        </div>
-        <p class="text-on-surface-variant text-base md:text-lg max-w-md mx-auto leading-relaxed">
-          Tarde de música, praia e encontro na Urca. Confirma sua presença e vem com a galera.
-        </p>
-        <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto text-sm">
-          <div class="glass-panel rounded-xl p-3 text-left">
-            <span class="block text-[10px] uppercase tracking-widest text-outline mb-1">Data</span>
-            20 · 06 · 2026
-          </div>
-          <div class="glass-panel rounded-xl p-3 text-left">
-            <span class="block text-[10px] uppercase tracking-widest text-outline mb-1">Horário</span>
-            16h
-          </div>
-          <div class="glass-panel rounded-xl p-3 text-left col-span-2">
-            <span class="block text-[10px] uppercase tracking-widest text-outline mb-1">Local</span>
-            🏖️ Urca, Rio de Janeiro
-          </div>
-        </div>
-      </div>
-
-      <div id="inscricao" class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 transform md:skew-y-1 md:hover:skew-y-0 transition-transform duration-500">
-        <div>
-          <h1 class="font-display text-3xl md:text-4xl text-primary uppercase tracking-tight">Confirma sua presença</h1>
-          <p class="text-on-surface-variant mt-2 text-sm">Leva menos de 1 minuto. Campos com <span class="text-primary-container">*</span> são obrigatórios.</p>
-        </div>
-
-        <form id="inscricao-form" class="space-y-5" novalidate>
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="nome">Nome <span class="text-primary-container">*</span></label>
-            <input class="field-input w-full px-4 py-3 text-sm" id="nome" name="nome" type="text" autocomplete="name" required placeholder="Qual seu nome?" />
-            <span class="text-error text-xs mt-1 block min-h-[1em]" data-for="nome"></span>
+        <form id="form" novalidate>
+          <div class="field">
+            <label for="nome">Seu nome <span class="req">*</span></label>
+            <input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Como você se chama?" />
+            <div class="err" data-for="nome"></div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="email">E-mail <span class="text-primary-container">*</span></label>
-              <input class="field-input w-full px-4 py-3 text-sm" id="email" name="email" type="email" autocomplete="email" required placeholder="seu@email.com" />
-              <span class="text-error text-xs mt-1 block min-h-[1em]" data-for="email"></span>
+          <div class="field">
+            <label for="telefone">Seu WhatsApp <span class="req">*</span></label>
+            <input id="telefone" name="telefone" type="tel" autocomplete="tel" required placeholder="(21) 99999-9999" inputmode="tel" />
+            <div class="err" data-for="telefone"></div>
+          </div>
+
+          <details>
+            <summary>+ Quero informar mais detalhes (opcional)</summary>
+            <div class="field" style="margin-top:0.5rem">
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="seu@email.com" />
             </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="telefone">WhatsApp <span class="text-primary-container">*</span></label>
-              <input class="field-input w-full px-4 py-3 text-sm" id="telefone" name="telefone" type="tel" autocomplete="tel" required placeholder="(21) 99999-9999" />
-              <span class="text-error text-xs mt-1 block min-h-[1em]" data-for="telefone"></span>
+            <div class="field">
+              <label for="bairro">Bairro / Cidade</label>
+              <input id="bairro" name="bairro" type="text" placeholder="De onde você vem?" />
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="bairro">Bairro / Cidade</label>
-              <input class="field-input w-full px-4 py-3 text-sm" id="bairro" name="bairro" type="text" placeholder="De onde você vem?" />
-            </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="idade">Idade</label>
-              <select class="field-input w-full px-4 py-3 text-sm" id="idade" name="idade">
-                <option value="">Selecione</option>
-                <option value="13-17">13 – 17</option>
-                <option value="18-24">18 – 24</option>
-                <option value="25-30">25 – 30</option>
-                <option value="31+">31+</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="acompanhantes">Vem com quantas pessoas?</label>
-              <select class="field-input w-full px-4 py-3 text-sm" id="acompanhantes" name="acompanhantes">
+            <div class="field">
+              <label for="acompanhantes">Vem com quantas pessoas?</label>
+              <select id="acompanhantes" name="acompanhantes">
                 <option value="0">Só eu</option>
                 <option value="1">+ 1</option>
                 <option value="2">+ 2</option>
@@ -211,271 +345,149 @@
                 <option value="4+">+ 4 ou mais</option>
               </select>
             </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="como-conheceu">Como ficou sabendo?</label>
-              <select class="field-input w-full px-4 py-3 text-sm" id="como-conheceu" name="comoConheceu">
-                <option value="">Selecione</option>
-                <option value="amigo">Amigo(a)</option>
-                <option value="instagram">Instagram</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="escola">Escola / faculdade</option>
-                <option value="outro">Outro</option>
-              </select>
+            <div class="field">
+              <label for="observacoes">Observações</label>
+              <textarea id="observacoes" name="observacoes" rows="2" placeholder="Acessibilidade, dúvidas…"></textarea>
             </div>
-          </div>
+          </details>
 
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2" for="observacoes">Algo que a gente precise saber?</label>
-            <textarea class="field-input w-full px-4 py-3 text-sm min-h-[88px] resize-y" id="observacoes" name="observacoes" placeholder="Acessibilidade, dúvidas, o que for…"></textarea>
+          <div class="check">
+            <input id="consent" name="consent" type="checkbox" required />
+            <label for="consent">Confirmo presença no evento (20/06, 16h, Urca) e aceito o uso dos meus dados só pra organização. <span class="req">*</span></label>
           </div>
+          <div class="err" data-for="consent"></div>
 
-          <div class="flex items-start gap-3">
-            <input class="mt-1 accent-primary-container" id="consentimento" name="consentimento" type="checkbox" required />
-            <label class="text-sm text-on-surface-variant leading-relaxed cursor-pointer" for="consentimento">
-              Confirmo que vou no Culto na Praia — Atos Itatiaia (20/06, 16h, Urca) e aceito que meus dados sejam usados só pra organizar o evento. <span class="text-primary-container">*</span>
-            </label>
-          </div>
-          <span class="text-error text-xs block min-h-[1em]" data-for="consentimento"></span>
-
-          <button type="submit" id="submit-btn" class="w-full flex items-center justify-center gap-3 bg-primary-container text-white px-8 py-5 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all glow-orange group">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span>
-            Quero ir!
-            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </button>
+          <button type="submit" class="cta" id="submit">Garantir minha vaga</button>
+          <p class="cta-note">Ao clicar, abrimos o WhatsApp com sua inscrição pronta.</p>
         </form>
       </div>
     </div>
 
-    <!-- SUCCESS VIEW -->
-    <div id="success-panel" class="hidden-view relative z-10 max-w-2xl mx-auto text-center space-y-8">
-      <div class="relative inline-block animate-float">
-        <div class="absolute inset-0 bg-primary-container/20 blur-3xl rounded-full scale-150"></div>
-        <img
-          alt="Atos"
-          class="relative w-full max-w-[400px] mx-auto drop-shadow-[0_20px_50px_rgba(255,107,0,0.6)] rounded-2xl"
-          src="assets/logo-atos.jpg"
-        />
-      </div>
-
-      <div class="space-y-4">
-        <h2 class="font-display text-5xl md:text-7xl text-primary uppercase leading-none">
-          <span class="brush-underline">Tá dentro!</span>
-        </h2>
-        <p class="text-on-surface-variant text-lg max-w-lg mx-auto">
-          Quase lá, <strong id="success-name" class="text-on-surface"></strong>! Envie a mensagem no WhatsApp pra confirmar sua inscrição.
-        </p>
-      </div>
-
-      <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 transform md:skew-y-1 md:hover:skew-y-0 transition-transform duration-500">
-        <div id="success-summary" class="text-left text-sm text-on-surface-variant leading-relaxed glass-panel rounded-2xl p-4 border border-white/5"></div>
-
-        <div class="flex flex-col gap-4">
-          <button type="button" id="open-whatsapp" class="flex items-center justify-center gap-3 bg-primary-container text-white px-8 py-5 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all glow-orange group w-full">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
-            Abrir WhatsApp
-            <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
-          </button>
-          <button type="button" id="new-inscription" class="text-tertiary font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:text-secondary underline underline-offset-8 decoration-2 transition-all">
-            <span class="material-symbols-outlined text-base">person_add</span>
-            Inscrever outra pessoa
-          </button>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-3 pt-2">
-          <span class="px-4 py-1 rounded-full bg-secondary-container/20 border border-secondary text-secondary text-xs font-bold uppercase tracking-widest">Vibe Tropical 🌴</span>
-          <span class="px-4 py-1 rounded-full bg-tertiary-container/20 border border-tertiary text-tertiary text-xs font-bold uppercase tracking-widest">Street Culture 🎨</span>
-          <span class="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-xs font-bold uppercase tracking-widest">Confirmado ✅</span>
-        </div>
-      </div>
+    <div class="success" id="success">
+      <h2>Inscrição pronta!</h2>
+      <p>Envie a mensagem no WhatsApp para confirmar, <strong id="who"></strong>.</p>
+      <div class="box" id="summary"></div>
+      <button type="button" class="cta" id="wa-btn">Abrir WhatsApp</button>
+      <button type="button" class="cta btn-ghost" id="again">Nova inscrição</button>
     </div>
 
-    <div class="fixed top-40 right-[-5%] w-64 h-64 opacity-20 rotate-12 pointer-events-none hidden lg:block z-0">
-      <div class="w-full h-full bg-primary-container" style="clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);"></div>
-    </div>
-    <div class="fixed bottom-20 left-[-5%] w-64 h-64 opacity-15 -rotate-12 pointer-events-none hidden lg:block z-0">
-      <div class="w-full h-full bg-secondary-container" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
-    </div>
-  </main>
+    <footer>Atos Itatiaia · Culto na Praia · Urca</footer>
+  </div>
 
-  <footer class="w-full py-10 bg-[#150c08] border-t-4 border-primary-container mt-auto relative z-10">
-    <div class="max-w-container mx-auto px-4 md:px-16 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="font-display text-tertiary italic font-black uppercase tracking-widest text-lg">Atos Itatiaia</div>
-      <p class="text-on-surface-variant text-sm text-center">© 2026 Atos Itatiaia — Movimento Jovem Rio</p>
-      <div class="flex gap-6 text-xs font-bold uppercase tracking-widest text-on-surface-variant">
-        <span>Privacidade</span>
-        <span>Termos</span>
-        <a class="hover:text-secondary underline decoration-2 underline-offset-4 transition-colors" href="#">Instagram</a>
-      </div>
-    </div>
-  </footer>
+  <div class="sticky-cta" id="sticky">
+    <button type="button" class="cta" id="sticky-submit">Garantir minha vaga</button>
+  </div>
 
   <script>
-    const WHATSAPP_NUMBER = "5521965925869";
-    const EVENT = {
-      nome: "Atos Itatiaia — Culto na Praia",
-      data: "20/06/2026",
-      horario: "16h",
-      local: "Urca, Rio de Janeiro",
-    };
+    const WA = "5521965925869";
+    const EVENT = { data: "20/06/2026", hora: "16h", local: "Urca, Rio de Janeiro" };
+    let data = null;
 
-    let lastInscription = null;
-    const form = document.getElementById("inscricao-form");
-    const formView = document.getElementById("form-view");
-    const successPanel = document.getElementById("success-panel");
-    const submitBtn = document.getElementById("submit-btn");
-
-    const comoConheceuLabels = {
-      amigo: "Amigo(a)",
-      instagram: "Instagram",
-      whatsapp: "WhatsApp",
-      escola: "Escola / faculdade",
-      outro: "Outro",
-    };
+    const $ = (s) => document.querySelector(s);
+    const form = $("#form");
 
     const rules = {
       nome: (v) => v.trim().length >= 2 || "Informe seu nome.",
-      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "E-mail inválido.",
       telefone: (v) => v.replace(/\D/g, "").length >= 10 || "WhatsApp inválido.",
-      consentimento: (el) => el.checked || "Precisa confirmar pra finalizar.",
+      consent: () => $("#consent").checked || "Marque para continuar.",
     };
 
-    function showError(field, msg) {
-      const input = document.getElementById(field === "consentimento" ? "consentimento" : field);
-      const err = document.querySelector(`[data-for="${field}"]`);
-      if (input) input.classList.toggle("invalid", !!msg);
-      if (err) err.textContent = msg || "";
+    function err(field, msg) {
+      const el = document.querySelector(`[data-for="${field}"]`);
+      const input = field === "consent" ? $("#consent") : $("#" + field);
+      if (el) el.textContent = msg || "";
+      if (input && input.classList) input.classList.toggle("invalid", !!msg && field !== "consent");
     }
 
-    function validateField(name) {
-      if (name === "consentimento") {
-        const el = document.getElementById("consentimento");
-        const result = rules.consentimento(el);
-        showError(name, result === true ? "" : result);
-        return result === true;
+    function valid(name) {
+      if (name === "consent") {
+        const ok = rules.consent();
+        err("consent", ok === true ? "" : ok);
+        return ok === true;
       }
-      const input = document.getElementById(name);
-      const result = rules[name](input.value);
-      showError(name, result === true ? "" : result);
-      return result === true;
+      const ok = rules[name]($("#" + name).value);
+      err(name, ok === true ? "" : ok);
+      return ok === true;
     }
 
-    ["nome", "email", "telefone"].forEach((name) => {
-      document.getElementById(name).addEventListener("blur", () => validateField(name));
-    });
+    ["nome", "telefone"].forEach((f) => $("#" + f).addEventListener("blur", () => valid(f)));
 
-    document.getElementById("telefone").addEventListener("input", (e) => {
+    $("#telefone").addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, "").slice(0, 11);
       if (v.length > 6) v = v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, "($1) $2-$3");
       else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
-      else if (v.length > 0) v = `(${v}`;
-      e.target.value = v.trim();
+      else if (v) v = `(${v}`;
+      e.target.value = v;
     });
 
-    document.getElementById("nav-cta").addEventListener("click", () => {
-      document.getElementById("inscricao").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    function getFormData() {
+    function collect() {
       const fd = new FormData(form);
-      const como = fd.get("comoConheceu");
       return {
         nome: fd.get("nome").trim(),
-        email: fd.get("email").trim(),
         telefone: fd.get("telefone").trim(),
-        bairro: fd.get("bairro").trim() || "—",
-        idade: fd.get("idade") || "—",
+        email: (fd.get("email") || "").trim() || "—",
+        bairro: (fd.get("bairro") || "").trim() || "—",
         acompanhantes: fd.get("acompanhantes") || "0",
-        comoConheceu: como ? (comoConheceuLabels[como] || como) : "—",
-        observacoes: fd.get("observacoes").trim() || "—",
-        inscritoEm: new Date().toLocaleString("pt-BR"),
-        evento: EVENT,
+        observacoes: (fd.get("observacoes") || "").trim() || "—",
       };
     }
 
-    function buildWhatsAppMessage(data) {
+    function msg(d) {
       const lines = [
         "🏖️ *Inscrição — Atos Itatiaia · Culto na Praia*",
         "",
-        `*Nome:* ${data.nome}`,
-        `*E-mail:* ${data.email}`,
-        `*WhatsApp:* ${data.telefone}`,
+        `*Nome:* ${d.nome}`,
+        `*WhatsApp:* ${d.telefone}`,
       ];
-      if (data.bairro !== "—") lines.push(`*Bairro/Cidade:* ${data.bairro}`);
-      if (data.idade !== "—") lines.push(`*Idade:* ${data.idade}`);
-      lines.push(`*Acompanhantes:* ${data.acompanhantes === "0" ? "Só eu" : "+" + data.acompanhantes}`);
-      if (data.comoConheceu !== "—") lines.push(`*Como ficou sabendo:* ${data.comoConheceu}`);
-      if (data.observacoes !== "—") lines.push(`*Obs:* ${data.observacoes}`);
-      lines.push("", `📅 ${EVENT.data} · ${EVENT.horario} · ${EVENT.local}`);
+      if (d.email !== "—") lines.push(`*E-mail:* ${d.email}`);
+      if (d.bairro !== "—") lines.push(`*Bairro:* ${d.bairro}`);
+      lines.push(`*Acompanhantes:* ${d.acompanhantes === "0" ? "Só eu" : "+" + d.acompanhantes}`);
+      if (d.observacoes !== "—") lines.push(`*Obs:* ${d.observacoes}`);
+      lines.push("", `📅 ${EVENT.data} · ${EVENT.hora} · ${EVENT.local}`);
       return lines.join("\n");
     }
 
-    function openWhatsApp(data) {
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage(data))}`, "_blank");
+    function openWA(d) {
+      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg(d))}`, "_blank");
     }
 
-    function createConfetti() {
-      const colors = ["#ff6b00", "#74d5e5", "#f9bc48", "#ffb693"];
-      for (let i = 0; i < 40; i++) {
-        setTimeout(() => {
-          const piece = document.createElement("div");
-          piece.classList.add("confetti-piece");
-          piece.style.left = Math.random() * 100 + "vw";
-          piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          const size = Math.random() * 10 + 5;
-          piece.style.width = size + "px";
-          piece.style.height = size + "px";
-          piece.style.animationDuration = Math.random() * 2 + 3 + "s";
-          document.body.appendChild(piece);
-          setTimeout(() => piece.remove(), 5000);
-        }, i * 80);
-      }
-    }
-
-    function showSuccess(data) {
-      lastInscription = data;
-      document.getElementById("success-name").textContent = data.nome.split(" ")[0];
-      document.getElementById("success-summary").innerHTML = `
-        <strong class="text-on-surface">Seus dados</strong><br>
-        Nome: ${data.nome}<br>
-        E-mail: ${data.email}<br>
-        WhatsApp: ${data.telefone}<br>
-        ${data.bairro !== "—" ? `Bairro/Cidade: ${data.bairro}<br>` : ""}
-        ${data.idade !== "—" ? `Idade: ${data.idade}<br>` : ""}
-        Acompanhantes: ${data.acompanhantes === "0" ? "Só eu" : "+" + data.acompanhantes}<br>
-        ${data.comoConheceu !== "—" ? `Como ficou sabendo: ${data.comoConheceu}<br>` : ""}
-        ${data.observacoes !== "—" ? `Obs: ${data.observacoes}<br>` : ""}
-        <br><em>${EVENT.nome} · ${EVENT.data} · ${EVENT.horario} · ${EVENT.local}</em>
-      `;
-      formView.classList.add("hidden-view");
-      successPanel.classList.remove("hidden-view");
-      createConfetti();
+    function submit() {
+      if (!["nome", "telefone", "consent"].every(valid)) return;
+      data = collect();
+      $("#who").textContent = data.nome.split(" ")[0];
+      $("#summary").innerHTML = [
+        `<strong>Resumo</strong><br>`,
+        `Nome: ${data.nome}<br>`,
+        `WhatsApp: ${data.telefone}<br>`,
+        data.email !== "—" ? `E-mail: ${data.email}<br>` : "",
+        data.bairro !== "—" ? `Bairro: ${data.bairro}<br>` : "",
+        `Acompanhantes: ${data.acompanhantes === "0" ? "Só eu" : "+" + data.acompanhantes}`,
+      ].join("");
+      $("#form-block").classList.add("hidden");
+      $("#pitch").classList.add("hidden");
+      $("#success").classList.add("on");
+      $("#sticky").classList.remove("visible");
+      openWA(data);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!["nome", "email", "telefone", "consentimento"].every(validateField)) return;
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Salvando…";
-      const data = getFormData();
-      showSuccess(data);
-      openWhatsApp(data);
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span> Quero ir! <span class="material-symbols-outlined">arrow_forward</span>`;
-    });
-
-    document.getElementById("open-whatsapp").addEventListener("click", () => {
-      if (lastInscription) openWhatsApp(lastInscription);
-    });
-
-    document.getElementById("new-inscription").addEventListener("click", () => {
-      lastInscription = null;
+    form.addEventListener("submit", (e) => { e.preventDefault(); submit(); });
+    $("#wa-btn").addEventListener("click", () => data && openWA(data));
+    $("#sticky-submit").addEventListener("click", () => { $("#submit").focus(); submit(); });
+    $("#again").addEventListener("click", () => {
+      data = null;
       form.reset();
-      ["nome", "email", "telefone", "consentimento"].forEach((f) => showError(f, ""));
-      successPanel.classList.add("hidden-view");
-      formView.classList.remove("hidden-view");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      ["nome", "telefone", "consent"].forEach((f) => err(f, ""));
+      $("#success").classList.remove("on");
+      $("#form-block").classList.remove("hidden");
+      $("#pitch").classList.remove("hidden");
     });
+
+    const sticky = $("#sticky");
+    const io = new IntersectionObserver(([e]) => {
+      sticky.classList.toggle("visible", !e.isIntersecting);
+    }, { threshold: 0 });
+    io.observe($("#submit"));
   </script>
 </body>
 </html>
