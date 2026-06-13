@@ -469,20 +469,25 @@
       <div class="success-panel" id="success-panel">
         <div class="success-emoji" aria-hidden="true">🔥</div>
         <h2>Tá dentro!</h2>
-        <p>Presença confirmada, <strong id="success-name"></strong>. Te esperamos dia 20/06 às 16h na Urca.</p>
+        <p>Quase lá, <strong id="success-name"></strong>! Envie a mensagem no WhatsApp pra confirmar sua inscrição.</p>
         <div class="summary" id="success-summary"></div>
-        <button type="button" class="btn-primary" id="new-inscription">Inscrever outra pessoa</button>
+        <button type="button" class="btn-primary" id="open-whatsapp">Abrir WhatsApp</button>
+        <button type="button" class="btn-primary" id="new-inscription" style="margin-top:0.75rem;background:var(--surface-2);box-shadow:none;border:1px solid var(--border)">Inscrever outra pessoa</button>
       </div>
     </section>
   </main>
 
   <script>
+    const WHATSAPP_NUMBER = "5521965925869";
+
     const EVENT = {
       nome: "Atos Distrital",
       data: "20/06/2026",
       horario: "16h",
       local: "Urca, Rio de Janeiro",
     };
+
+    let lastInscription = null;
 
     const form = document.getElementById("inscricao-form");
     const formView = document.getElementById("form-view");
@@ -560,7 +565,32 @@
       localStorage.setItem(key, JSON.stringify(list));
     }
 
+    function buildWhatsAppMessage(data) {
+      const lines = [
+        "🔥 *Inscrição Atos Distrital*",
+        "",
+        `*Nome:* ${data.nome}`,
+        `*E-mail:* ${data.email}`,
+        `*WhatsApp:* ${data.telefone}`,
+      ];
+
+      if (data.bairro !== "—") lines.push(`*Bairro/Cidade:* ${data.bairro}`);
+      if (data.idade !== "—") lines.push(`*Idade:* ${data.idade}`);
+      lines.push(`*Acompanhantes:* ${data.acompanhantes === "0" ? "Só eu" : "+" + data.acompanhantes}`);
+      if (data.comoConheceu !== "—") lines.push(`*Como ficou sabendo:* ${data.comoConheceu}`);
+      if (data.observacoes !== "—") lines.push(`*Obs:* ${data.observacoes}`);
+
+      lines.push("", `📅 ${EVENT.data} · ${EVENT.horario} · ${EVENT.local}`);
+      return lines.join("\n");
+    }
+
+    function openWhatsApp(data) {
+      const text = encodeURIComponent(buildWhatsAppMessage(data));
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+    }
+
     function showSuccess(data) {
+      lastInscription = data;
       document.getElementById("success-name").textContent = data.nome.split(" ")[0];
       document.getElementById("success-summary").innerHTML = `
         <strong>Seus dados</strong><br>
@@ -589,15 +619,18 @@
 
       const data = getFormData();
       saveInscription(data);
+      showSuccess(data);
+      openWhatsApp(data);
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Quero ir!";
+    });
 
-      setTimeout(() => {
-        showSuccess(data);
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Quero ir!";
-      }, 500);
+    document.getElementById("open-whatsapp").addEventListener("click", () => {
+      if (lastInscription) openWhatsApp(lastInscription);
     });
 
     document.getElementById("new-inscription").addEventListener("click", () => {
+      lastInscription = null;
       form.reset();
       ["nome", "email", "telefone", "consentimento"].forEach((f) => showError(f, ""));
       successPanel.classList.remove("visible");
