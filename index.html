@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscrição — Atos Distrital</title>
+  <meta name="description" content="Culto jovem Atos Distrital — 20 de junho, 16h, Urca. Todos são bem-vindos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0c10;
+      --surface: #16161d;
+      --surface-2: #1e1e28;
+      --ink: #f4f4f7;
+      --muted: #9b9bab;
+      --accent: #ff4d6d;
+      --accent-2: #7b61ff;
+      --accent-soft: rgba(255, 77, 109, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --success: #3dd68c;
+      --error: #ff6b6b;
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Outfit", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-glow span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+    }
+
+    .bg-glow .g1 {
+      width: 420px; height: 420px;
+      background: var(--accent);
+      top: -120px; left: -80px;
+    }
+
+    .bg-glow .g2 {
+      width: 360px; height: 360px;
+      background: var(--accent-2);
+      bottom: -100px; right: -60px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3.5rem;
+    }
+
+    .hero {
+      margin-bottom: 1.75rem;
+      animation: rise 0.6s ease both;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+    }
+
+    .badge-pink {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .badge-outline {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.6rem, 10vw, 3.6rem);
+      font-weight: 800;
+      margin: 0;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .tagline {
+      margin: 1rem 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 32ch;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .meta-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .meta-item.wide { grid-column: 1 / -1; }
+
+    .meta-item .label {
+      display: block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 1.75rem 1.5rem;
+      animation: rise 0.6s 0.08s ease both;
+    }
+
+    .card h2 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .card .subtitle {
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+      font-size: 0.92rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    label .req { color: var(--accent); }
+
+    input, select, textarea {
+      font: inherit;
+      color: var(--ink);
+      background: var(--surface-2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    input::placeholder, textarea::placeholder { color: #5c5c6e; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: var(--error);
+    }
+
+    select { cursor: pointer; }
+    textarea { resize: vertical; min-height: 88px; }
+
+    .hint {
+      font-size: 0.78rem;
+      color: #6b6b7d;
+    }
+
+    .error-msg {
+      font-size: 0.78rem;
+      color: var(--error);
+      min-height: 1em;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: 0.15rem;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .checkbox-row label {
+      font-weight: 400;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0;
+      cursor: pointer;
+    }
+
+    .actions { margin-top: 1.5rem; }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      width: 100%;
+      transition: transform 0.15s, filter 0.2s;
+    }
+
+    button:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover { filter: brightness(1.08); }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+      animation: rise 0.5s ease both;
+    }
+
+    .success-panel.visible { display: block; }
+
+    .success-emoji {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+
+    .success-panel h2 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 0 0 0.5rem;
+    }
+
+    .success-panel p {
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+    }
+
+    .summary {
+      text-align: left;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.15rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .summary strong { color: var(--ink); }
+
+    .hidden { display: none !important; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true">
+    <span class="g1"></span>
+    <span class="g2"></span>
+  </div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="badges">
+        <span class="badge badge-pink">Culto jovem</span>
+        <span class="badge badge-outline">Todos são bem-vindos</span>
+      </div>
+      <h1>Atos<br><span>Distrital</span></h1>
+      <p class="tagline">Música, encontro e uma tarde diferente na Urca. Confirma sua presença e vem com a galera.</p>
+      <div class="meta">
+        <div class="meta-item">
+          <span class="label">Data</span>
+          20 · 06 · 2026
+        </div>
+        <div class="meta-item">
+          <span class="label">Horário</span>
+          16h
+        </div>
+        <div class="meta-item wide">
+          <span class="label">Local</span>
+          Urca, Rio de Janeiro
+        </div>
+      </div>
+    </header>
+
+    <section class="card" id="form-card">
+      <div id="form-view">
+        <h2>Confirma sua presença</h2>
+        <p class="subtitle">Leva menos de 1 minuto. Campos com <span style="color:var(--accent)">*</span> são obrigatórios.</p>
+
+        <form id="inscricao-form" novalidate>
+          <div class="grid">
+            <div class="field full">
+              <label for="nome">Nome <span class="req">*</span></label>
+              <input type="text" id="nome" name="nome" autocomplete="name" required placeholder="Qual seu nome?" />
+              <span class="error-msg" data-for="nome"></span>
+            </div>
+
+            <div class="field">
+              <label for="email">E-mail <span class="req">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required placeholder="seu@email.com" />
+              <span class="error-msg" data-for="email"></span>
+            </div>
+
+            <div class="field">
+              <label for="telefone">WhatsApp <span class="req">*</span></label>
+              <input type="tel" id="telefone" name="telefone" autocomplete="tel" required placeholder="(21) 99999-9999" />
+              <span class="error-msg" data-for="telefone"></span>
+            </div>
+
+            <div class="field">
+              <label for="bairro">Bairro / Cidade</label>
+              <input type="text" id="bairro" name="bairro" placeholder="De onde você vem?" />
+            </div>
+
+            <div class="field">
+              <label for="idade">Idade</label>
+              <select id="idade" name="idade">
+                <option value="">Selecione</option>
+                <option value="13-17">13 – 17</option>
+                <option value="18-24">18 – 24</option>
+                <option value="25-30">25 – 30</option>
+                <option value="31+">31+</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="acompanhantes">Vem com quantas pessoas?</label>
+              <select id="acompanhantes" name="acompanhantes">
+                <option value="0">Só eu</option>
+                <option value="1">+ 1</option>
+                <option value="2">+ 2</option>
+                <option value="3">+ 3</option>
+                <option value="4+">+ 4 ou mais</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="como-conheceu">Como ficou sabendo?</label>
+              <select id="como-conheceu" name="comoConheceu">
+                <option value="">Selecione</option>
+                <option value="amigo">Amigo(a)</option>
+                <option value="instagram">Instagram</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="escola">Escola / faculdade</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="observacoes">Algo que a gente precise saber?</label>
+              <textarea id="observacoes" name="observacoes" placeholder="Acessibilidade, dúvidas, o que for…"></textarea>
+              <span class="hint">Opcional.</span>
+            </div>
+
+            <div class="field full">
+              <div class="checkbox-row">
+                <input type="checkbox" id="consentimento" name="consentimento" required />
+                <label for="consentimento">
+                  Confirmo que vou no Atos Distrital (20/06, 16h, Urca) e aceito que meus dados sejam usados só pra organizar o evento. <span class="req">*</span>
+                </label>
+              </div>
+              <span class="error-msg" data-for="consentimento"></span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-primary" id="submit-btn">Quero ir!</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success-panel" id="success-panel">
+        <div class="success-emoji" aria-hidden="true">🔥</div>
+        <h2>Tá dentro!</h2>
+        <p>Presença confirmada, <strong id="success-name"></strong>. Te esperamos dia 20/06 às 16h na Urca.</p>
+        <div class="summary" id="success-summary"></div>
+        <button type="button" class="btn-primary" id="new-inscription">Inscrever outra pessoa</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const EVENT = {
+      nome: "Atos Distrital",
+      data: "20/06/2026",
+      horario: "16h",
+      local: "Urca, Rio de Janeiro",
+    };
+
+    const form = document.getElementById("inscricao-form");
+    const formView = document.getElementById("form-view");
+    const successPanel = document.getElementById("success-panel");
+    const submitBtn = document.getElementById("submit-btn");
+
+    const comoConheceuLabels = {
+      amigo: "Amigo(a)",
+      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+      escola: "Escola / faculdade",
+      outro: "Outro",
+    };
+
+    const rules = {
+      nome: (v) => v.trim().length >= 2 || "Informe seu nome.",
+      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "E-mail inválido.",
+      telefone: (v) => v.replace(/\D/g, "").length >= 10 || "WhatsApp inválido.",
+      consentimento: (el) => el.checked || "Precisa confirmar pra finalizar.",
+    };
+
+    function showError(field, msg) {
+      const input = document.getElementById(field === "consentimento" ? "consentimento" : field);
+      const err = document.querySelector(`[data-for="${field}"]`);
+      if (input) input.classList.toggle("invalid", !!msg);
+      if (err) err.textContent = msg || "";
+    }
+
+    function validateField(name) {
+      if (name === "consentimento") {
+        const el = document.getElementById("consentimento");
+        const result = rules.consentimento(el);
+        showError(name, result === true ? "" : result);
+        return result === true;
+      }
+      const input = document.getElementById(name);
+      const result = rules[name](input.value);
+      showError(name, result === true ? "" : result);
+      return result === true;
+    }
+
+    ["nome", "email", "telefone"].forEach((name) => {
+      document.getElementById(name).addEventListener("blur", () => validateField(name));
+    });
+
+    document.getElementById("telefone").addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+      if (v.length > 6) v = v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, "($1) $2-$3");
+      else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
+      else if (v.length > 0) v = `(${v}`;
+      e.target.value = v.trim();
+    });
+
+    function getFormData() {
+      const fd = new FormData(form);
+      const como = fd.get("comoConheceu");
+      return {
+        nome: fd.get("nome").trim(),
+        email: fd.get("email").trim(),
+        telefone: fd.get("telefone").trim(),
+        bairro: fd.get("bairro").trim() || "—",
+        idade: fd.get("idade") || "—",
+        acompanhantes: fd.get("acompanhantes") || "0",
+        comoConheceu: como ? (comoConheceuLabels[como] || como) : "—",
+        observacoes: fd.get("observacoes").trim() || "—",
+        inscritoEm: new Date().toLocaleString("pt-BR"),
+        evento: EVENT,
+      };
+    }
+
+    function saveInscription(data) {
+      const key = "atos-distrital-inscricoes";
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      list.push(data);
+      localStorage.setItem(key, JSON.stringify(list));
+    }
+
+    function showSuccess(data) {
+      document.getElementById("success-name").textContent = data.nome.split(" ")[0];
+      document.getElementById("success-summary").innerHTML = `
+        <strong>Seus dados</strong><br>
+        Nome: ${data.nome}<br>
+        E-mail: ${data.email}<br>
+        WhatsApp: ${data.telefone}<br>
+        ${data.bairro !== "—" ? `Bairro/Cidade: ${data.bairro}<br>` : ""}
+        ${data.idade !== "—" ? `Idade: ${data.idade}<br>` : ""}
+        Acompanhantes: ${data.acompanhantes === "0" ? "Só eu" : "+" + data.acompanhantes}<br>
+        ${data.comoConheceu !== "—" ? `Como ficou sabendo: ${data.comoConheceu}<br>` : ""}
+        ${data.observacoes !== "—" ? `Obs: ${data.observacoes}<br>` : ""}
+        <br><em>${EVENT.nome} · ${EVENT.data} · ${EVENT.horario} · ${EVENT.local}</em>
+      `;
+      formView.classList.add("hidden");
+      successPanel.classList.add("visible");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const valid = ["nome", "email", "telefone", "consentimento"].every(validateField);
+      if (!valid) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Salvando…";
+
+      const data = getFormData();
+      saveInscription(data);
+
+      setTimeout(() => {
+        showSuccess(data);
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Quero ir!";
+      }, 500);
+    });
+
+    document.getElementById("new-inscription").addEventListener("click", () => {
+      form.reset();
+      ["nome", "email", "telefone", "consentimento"].forEach((f) => showError(f, ""));
+      successPanel.classList.remove("visible");
+      formView.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
