@@ -39,7 +39,7 @@
 | Item | Status | Notas |
 |------|--------|-------|
 | Remover Tailwind CDN + fontes pesadas | ✅ | Página ~14 KB HTML |
-| Header só com logo flutuante | ✅ | PNG transparente |
+| Header só com logo flutuante | ✅ | Substituído depois por hero animado |
 | Reduzir campos obrigatórios | ✅ | Nome + WhatsApp apenas |
 | Campos extras colapsáveis | ✅ | E-mail, bairro, acompanhantes, obs |
 | CTA “Garantir minha vaga” | ✅ | + sticky no mobile |
@@ -47,11 +47,12 @@
 
 ---
 
-## Fase 4 — Conteúdo e assets 📋
+## Fase 4 — Conteúdo e assets 🔄
 
 | Item | Status | Prioridade | Notas |
 |------|--------|------------|-------|
-| Imagem de cabeçalho/hero gerada (IA) | 📋 | Alta | Prompt JSON já preparado; usar logo como referência |
+| Hero claro/escuro com sol animado | ✅ | Alta | `banner-day.jpg`, `banner-night.jpg`, `sun-scroll.png` |
+| Cena de praia com formulário flutuante | 🔄 | Alta | Nova direção local, usando `beach-scene-day.webp` + sol/lua em CSS |
 | Substituir/refinar PNG do logo | 📋 | Média | Recorte automático pode ter resíduos de fundo |
 | Endereço exato na Urca | 📋 | Alta | Link Google Maps no rodapé |
 | Link Instagram real | 📋 | Média | Footer ainda sem URL |
@@ -127,4 +128,6 @@ Pós-evento → Arquivar inscrições + retrospectiva de conversão
 | v1 | `aa2ce7c` | WhatsApp wa.me |
 | v2 | `9ca5a31` | Logos + paleta Culto na Praia |
 | v2.5 | `2d238ab` | Design Stitch (Tailwind, pesado) |
-| **v3** | `43bc7a3` | **Produção atual** — leve, conversão |
+| v3 | `43bc7a3` | Leve, conversão |
+| v4 | local | Hero com sol no scroll + formulário leve |
+| **v5** | local | **Em validação** — cena de praia, sol/lua e formulário flutuante |

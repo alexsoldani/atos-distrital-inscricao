@@ -89,9 +89,14 @@ Visitante → preenche formulário → clica CTA
 | Arquivo | Função |
 |---------|--------|
 | `index.html` | Toda a aplicação (markup, CSS, JS) |
-| `assets/logo-atos-hero.png` | Logo header (recorte sem fundo, 200px) |
+| `assets/beach-scene-day.webp` | Praia gerada/otimizada para fundo da experiência |
+| `assets/banner-day.jpg` | Banner claro usado no hero |
+| `assets/banner-night.jpg` | Banner escuro usado no crossfade do hero |
+| `assets/sun-scroll.png` | Sol com fundo transparente para animação no scroll |
+| `assets/sun-scroll.jpg` | Imagem original do sol |
+| `assets/logo-atos-hero.png` | Logo recortada antiga, mantida como asset |
 | `assets/logo-atos.jpg` | Favicon |
-| `assets/logo-culto-praia.jpg` | Logo completa praia (não usada na v3) |
+| `assets/logo-culto-praia.jpg` | Logo completa praia |
 | `.vercel/project.json` | Link projeto ↔ Vercel |
 | `outras versões em analise/stitch_*` | Referência design Stitch |
 
@@ -148,7 +153,9 @@ Repositório git existe **apenas localmente** — não há remote GitHub configu
 2. `aa2ce7c` — WhatsApp
 3. `9ca5a31` — Branding logos
 4. `2d238ab` — Stitch (descartado como produção final)
-5. `43bc7a3` — **v3 atual**
+5. `43bc7a3` — v3 leve focada em conversão
+6. v4 local — hero claro/escuro com sol animado no scroll
+7. v5 local — cena de praia full-screen com sol/lua e formulário flutuante
 
 ---
 
@@ -167,12 +174,12 @@ Repositório git existe **apenas localmente** — não há remote GitHub configu
 - Background `#1b110d`, primary-container `#ff6b00`, secondary `#74d5e5`, tertiary `#f9bc48`
 - Ver `outras versões em analise/stitch_atos_itatiaia_event_landing/DESIGN.md`
 
-### Logo header
-- Gerada a partir de JPG com fundo cinza → PNG transparente via script Pillow em `.venv/`
-- Se qualidade do recorte não satisfizer: substituir `assets/logo-atos-hero.png` por export manual (Photoshop, Photoroom, etc.)
-
-### Pendente: hero banner
-Foi solicitado prompt JSON (inglês) para gerar **imagem de cabeçalho** com a logo como referência — **ainda não integrada** na página.
+### Cena praia + formulário flutuante
+- O fundo usa `beach-scene-day.webp`, gerado como base visual sem texto e otimizado para web.
+- Sol e lua são elementos CSS, não imagens, para permitir transição suave no scroll.
+- O JavaScript calcula o progresso do scroll e atualiza `--sun-y`, `--moon-y`, `--sun-opacity`, `--moon-opacity`, `--sunset-opacity`, `--night-opacity` e `--stars-opacity`.
+- O formulário fica flutuante sobre a cena, com apenas nome, WhatsApp, consentimento e CTA.
+- Há suporte a `prefers-reduced-motion` para reduzir animações auxiliares.
 
 ---
 

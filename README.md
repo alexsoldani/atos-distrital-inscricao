@@ -35,6 +35,11 @@ Landing page de inscrição para o evento **Atos Distrital** (culto jovem na Urc
 atos-distrital-inscricao/
 ├── index.html              # Landing page (produção)
 ├── assets/
+│   ├── beach-scene-day.webp # Praia gerada/otimizada para fundo da experiência
+│   ├── banner-day.jpg      # Banner claro do topo
+│   ├── banner-night.jpg    # Banner escuro do topo
+│   ├── sun-scroll.png      # Sol recortado para animação no scroll
+│   ├── sun-scroll.jpg      # Original do sol
 │   ├── logo-atos-hero.png  # Logo ATOS recortada (header)
 │   ├── logo-atos-hero.jpg  # Original com fundo cinza
 │   ├── logo-atos.jpg       # Logo graffiti (favicon / sucesso)
@@ -77,13 +82,13 @@ const WA = "5521965925869";
 
 Formato: código do país + DDD + número, sem `+` ou espaços.
 
-## Design atual (v3 — conversão)
+## Design atual (v5 — cena praia + formulário flutuante)
 
-- Fundo claro, formulário branco, sem dependências externas
-- Header: apenas logo flutuante (`logo-atos-hero.png`)
+- Cena full-screen com praia gerada, transição dia → pôr do sol → noite
+- Sol e lua animados por scroll, controlados em CSS/JS
+- Formulário compacto flutuando sobre o cenário
 - Campos obrigatórios: nome, WhatsApp, consentimento
-- Campos opcionais em `<details>` colapsável
-- CTA fixo no mobile ao rolar
+- Sem campos opcionais na versão compacta
 - Paleta: `--accent: #e85d00`, fundo `#faf8f5`
 
 ## Documentação complementar
